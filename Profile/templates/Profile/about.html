@@ -1,0 +1,47 @@
+{% extends "base.html" %} 
+
+{ {% block head %}
+    <title>About {{ userprofile.first_name }}</title>
+{% endblock head %}}
+
+{% block body %}
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">
+     <b class="btn-sm text-white " href=" {% url 'Profile:view_profile_with_pk' pk=user.pk %}">{{ user.first_name }}</b>
+        <b>about us</b>
+</nav>
+<br/>
+<h1>about us </h1>
+{% load i18n %}
+{% load cache %}
+{% get_current_language as LANGUAGE_CODE %}
+{% cache 600 welcome LANGUAGE_CODE %}
+{% trans "Welcome to example.com" %}
+{% endcache %}
+
+          {% for about in abouts %}
+          <div class="card border-grey  mb-3 shadow border-bottom-0" style="max-width: 44.5rem ; " >
+              <div class="card-header ">
+                 
+                
+                
+              </div>
+              <div class="card-body ">
+                <p class=" text-white card-title"><p>{{ about.userprofile.location }}</p></p>
+                <p class="card-text border-dark" > 
+                  <a href="{{ Post.get_absolute_re_path }}">
+                    <img src="{{ about.userprofile.image.url  }}" class="mw-100 rounded border-dark" style="width: 41.24rem; ">
+                  </a>  
+                </p>
+              </div>
+              <div class="card-footer bg ">
+
+
+   <p> {{about.date}}</p>
+</form>            
+              </div>
+            </div>
+            {% endfor  %}
+
+
+
+{% endblock body %}

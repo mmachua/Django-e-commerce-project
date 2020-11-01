@@ -1,0 +1,139 @@
+{% extends "base.html" %} 
+
+{ {% block head %}
+    <title>All Shops</title>
+{% endblock head %}}
+
+{% block body %}
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;"><b>All Shops</b></nav>
+<br/>
+
+
+
+
+    <div class="row no-gutters">
+    <!--fist part-->
+            <div class="col-12 col-sm-6 col-md-3">
+
+          
+
+            
+            </div>
+    <!--end fisrt part-->
+
+
+    <!--second secton-->
+        <div class="col-12 col-sm-6 col-md-9" style="color:rgb(21, 20, 13)">
+
+
+
+        
+       <div class="container"> 
+       {% for user in users %}   
+       {% if user.is_staff %}      
+          <div class=" ">
+                
+                <div class=" mw-100 card  " style="width: 62rem; ">
+          
+          
+          
+          <div class="card-body " >
+              
+                    <div class="row">
+                                <div class="col-12 col-md-3">
+                                    <a href="{% url 'Profile:view_profile_with_pk' pk=user.pk %}">
+                            
+                            
+                                         <img class="border border-grey rounded" src="{% if user.userprofile.image %}
+                                                     {{ user.userprofile.image.url  }}{% else %}{% endif  %}
+                                                    " class="img-responsive" alt="no image" style="width:5.5rem; height:6.5rem;">
+                            
+                            
+                            
+                                    </a>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                     
+                                    <a href="{% url 'Profile:view_profile_with_pk' pk=user.pk %}">
+                                            <b>{{ user.userprofile.shop_name|truncatechars:100 }}</b> 
+                                    </a>
+                                    </br>
+                                    <a >
+                                         location:   {{ user.userprofile.city|truncatechars:100 }}
+                                    </a>  
+                                   <a>
+                                            <p>contacts: {{ user.userprofile.phone|truncatechars:100 }}</p>
+                                    </a>  
+                                        
+
+                                </div>
+                                <div class="col-12 col-md-6">
+                                       <p style="color:black;">{{ user.userprofile.description|truncatechars:100 }}</p>
+   
+
+                                </div>
+                    </div>
+
+
+               
+           
+        
+          
+         </div>
+         
+</div>
+
+         </br>
+        </div>
+        {% else %}
+
+        {% endif %}
+
+ {% endfor %}
+
+
+
+
+  <div class="loading" style="display: none;">
+    Loading...
+  </div>
+
+  {% if page_obj.has_next %}
+    <a class="infinite-more-link" href="?page={{ users.next_page_number }}">More</a>
+  {% endif %}
+
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+
+
+
+
+      </div>
+
+ {% include "pagination.html" %} 
+
+
+<!--end second section-->
+
+
+    <br/>
+      </hr>
+     
+     
+      <footer class="container">
+            <p class="float-right"><a href="#">Back to top</a></p>
+              
+            <p>Martin Machua &copy; 2019 <a href="#">Privacy</a> Favourite <a href="#">Terms</a></p>
+          </footer>   
+    
+
+{% endblock body %}

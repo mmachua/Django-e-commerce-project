@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+    { {% block head %}
+    <title>Profile</title>
+{% endblock head %}}
+ {% block body %} 
+<!--navbar with profile element tabs user authentication is necessary for security-->
+ 
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">
+    {% if user.is_authenticated %}
+    <div class="dropdown">
+        <button class="btn btn-sm  dropdown-toggle text-white" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:teal;">
+         Edit profile
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <a class="nav-item nav-link dropdown-item " href="{% url 'login:edit_profile'  %}">Edit Profile</a>
+          <a class="nav-item nav-link dropdown-item " href="{% url 'login:change_password'  %}">Change Password</a>
+          <a class="nav-item nav-link dropdown-item " href="{% url 'login:logout' %}">Logout</a>
+        </div>
+      </div>
+      {% endif %}
+</nav>
+   
+
+<br/>
+
+
+
+
+    <div class="row no-gutters">
+        <div class="col-12 col-sm-6 col-md-3">
+
+          <div class="container">
+            <div class=" mw-100 p-2 card  border-0 " style="width: 21.5rem;">
+             
+                <img class="card-img-top" src="{% if user.userprofile.image %}
+                              {{ user.userprofile.image.url  }}{% else %}{% endif  %}
+                              " class="img-responsive" alt="no image"  style="width:21.2.5rem; height:15rem; " >
+              
+                <div class="card-body">
+                  <h5 class="card-title center"> <b>{{ user }}</b></h5>
+                  <p class="card-text font-italic " style="color:red;"><p>{{ user.userprofile.description }}</p></p>
+                  <p class="card-text">
+              <hr>
+                  
+                  <p><b>Email </b>  : {{ user.email }}</p>
+                  
+                  <p><b>City </b>: {{ user.userprofile.city }}</p>
+                  <p><b>website</b>: {{ user.userprofile.website }}</p>
+                  <p><b>Contacts</b>: {{ user.userprofile.phone }}</p>
+              
+        
+                  
+                </div>
+              </div>
+            </div>
+
+
+            
+          </div>
+
+        <div class="col-12 col-sm-6 col-md-6" style="color:rgb(21, 20, 13)">
+
+
+       <div class="container"> 
+       
+       <div class=" row"   >
+         {% for user_post in user_posts %}
+          <div class=" card   mb-3  border-0" style="width: 20.24rem; height:28.24rem; display:table-row"  >
+              <div class="card-header " >
+                 
+               <!--<a class="mr-auto " href="{% url 'login:view_profile_with_pk' pk=user.pk %}"> <b>{{ user_post.user.username }} </b> </a>-->
+                
+              </div>
+              <div class="card-body ">
+                {% if user_post.image %}
+                <p class="card-text border-dark" > 
+                  <a href="{{ user_post.get_absolute_re_path }}">  
+                    <img src="{% if user_post.image %}{{ user_post.image.url  }}{% else %}{% endif  %}" class="mw-100 rounded border-dark" style="width: 20.24rem; height:20.24rem; ">
+                  </a>
+                </p>{% endif %}
+              </div>
+              <div class="card-footer bg ">
+
+            
+              </div>
+              
+            </div>
+          
+        {% endfor  %} 
+      </div>
+  </div>
+</div>
+
+
+
+<div class="col-12 col-sm-6 col-md-3">
+
+         <div class=" mw-100 card " style="width: 15rem;">
+            <div class="card-header">
+                <h5><b>favourite shops </b></h5> 
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                  {% for friend in friends %}
+                  <div class="">
+                  
+                      <a href="{% url 'Profile:view_profile_with_pk' pk=friend.pk %}">
+                        <h6><br/><img class="border border-grey rounded-circle" src="{% if friend.userprofile.image %}{{ friend.userprofile.image.url  }}{% else %}{% endif  %}" alt="no image" style="width:3rem; height:3rem;">
+                         <b  >{{ friend.userprofile.shop_name }}</b> </h6>
+                      </a>
+                    
+                  </div>
+                  <a href="{% url 'home:change_friends' operation='remove' pk=friend.pk %}">
+                      <button type="submit" class="btn btn-sm btn-outline-dark " name="button">remove from favourite</button> 
+                    </a>
+                  
+                  {% endfor %}
+              </li>
+              
+            </ul>
+          </div>
+
+
+      </div>
+
+</div>
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<br>
+<hr>
+<footer class="container">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p>&copy; Martin Machua &middot; <a href="#">Privacy</a> Smartchat <a href="#">Terms</a></p>
+  </footer> 
+<hr>
+
+{% endblock body %} 
