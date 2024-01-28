@@ -1,4 +1,5 @@
 # Django-e-commerce-project
 
-This is a Django social commerce plartform with two types of users. 
+This is a Django social commerce platform with two types of users. 
 
+fully-fledged ecom 
